@@ -20,19 +20,24 @@ contract Faucet is DSAuth, DSNote {
 	}
 
 	//function to deposit SAI into faucet
-	function deposit() {
-		token.transferFrom(msg.sender, this);	//not sure if this is right syntax
+	function deposit() public {
+		var ok = token.transferFrom(msg.sender, this);	//not sure if this is right syntax
+		if (!ok) {
+			revert();
+		}
 	}
 
 	//function to pull SAI from faucet
-	function drip() note isNewUser {
+	function drip() public note isNewUser {
 		hasClaimed[msg.sender] = true;
-		token.transfer(msg.sender, 25);			//how does 25 amount work with decimals of SAI
+		var ok = token.transfer(msg.sender, 25);			//how does 25 amount work with decimals of SAI
+		if (!ok) {
+			revert();
+		}
 	}
 
 	//function to reset user permission to pull more sai 
-	function resetUserAllocation(address user) auth {
+	function resetUserAllocation(address user) public auth {
 		hasClaimed[user] = false;
-		return true;
 	}
 }
