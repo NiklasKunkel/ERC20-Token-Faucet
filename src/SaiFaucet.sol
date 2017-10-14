@@ -13,7 +13,7 @@ contract Faucet is DSAuth, DSNote {
 
 	//modifier to check if account has already pulled from faucet 
 	modifier isNewUser() {
-		if hasClaimed(msg.sender) {
+		if (hasClaimed[msg.sender]) {
 			throw;						//user has already drawn SAI from faucet 
 		}
 		_;
@@ -25,8 +25,9 @@ contract Faucet is DSAuth, DSNote {
 	}
 
 	//function to pull SAI from faucet
-	function drip() note isNewUser returns () {
-		token.transfer(msg.sender, 25)			//how does 25 amount work with decimals of SAI
+	function drip() note isNewUser {
+		hasClaimed[msg.sender] = true;
+		token.transfer(msg.sender, 25);			//how does 25 amount work with decimals of SAI
 	}
 
 	//function to reset user permission to pull more sai 
