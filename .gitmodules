@@ -1,3 +1,6 @@
 [submodule "src/lib/ds-note"]
 	path = src/lib/ds-note
 	url = https://github.com/dapphub/ds-note
+[submodule "src/lib/ds-auth"]
+	path = src/lib/ds-auth
+	url = https://github.com/dapphub/ds-auth
